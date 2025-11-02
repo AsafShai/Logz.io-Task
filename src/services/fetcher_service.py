@@ -56,18 +56,18 @@ class FetcherService:
         elif source_name == 'weatherapi':
             try:
                 data = []
-            for city in cities:
-                url = f"https://api.weatherapi.com/v1/current.json?key={API_KEY}&q={city}&aqi=no"
-                response = await client.get(url)
-                if response.status_code != 200:
-                    raise ValueError(f"Error fetching data from {source_name}: {response.status_code}")
-                response_data = response.json()
-                city_data = {
-                    "city": response_data['location']['name'],
-                    "temperature_celsius": response_data['current']['temp_c'],
-                    "description": response_data['current']['condition']['text'],
-                    "source_provider": source_name
-                }
+                for city in cities:
+                    url = f"https://api.weatherapi.com/v1/current.json?key={API_KEY}&q={city}&aqi=no"
+                    response = await client.get(url)
+                    if response.status_code != 200:
+                        raise ValueError(f"Error fetching data from {source_name}: {response.status_code}")
+                    response_data = response.json()
+                    city_data = {
+                        "city": response_data['location']['name'],
+                        "temperature_celsius": response_data['current']['temp_c'],
+                        "description": response_data['current']['condition']['text'],
+                        "source_provider": source_name
+                    }
                     data.append(city_data)
                 return data
             except Exception as e:
